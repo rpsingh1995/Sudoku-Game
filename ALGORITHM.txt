@@ -1,0 +1,222 @@
+ALGORITHM
+
+STEP 1: [Begin] Start
+
+STEP 2: Display “SUDOKU INSTRUCTIONS”
+
+STEP 3: [Make Sudoku Matrix Empty]
+for i=0 to 8 in steps of 1
+do
+	for j=0 to 8 in steps of 1
+	do
+		S[i][j] <-- NULL
+	Done
+Done
+
+STEP 4: Initialize fix values
+
+STEP 5: [Define fix values]
+for i=0 to 8 in steps of 1
+do
+	for j=0 to 8 in steps of 1
+	do
+		if(S[i][j]==NULL) then fix[i][j] <-- 0
+		otherwise fix[i][j] <-- 1
+	done
+done
+
+STEP 6:  [Initialize p,q]
+p <-- 4
+q <-- 4
+
+STEP 7: [Display Sudoku Matrix]
+ascii <-- (int)ch
+for i = 0 to 8 in steps of 1
+do
+	print ("\n|")
+	for j = 0 to 8 in steps of 1
+	do
+if(i==p && j==q && fix[i][j]==0 && ascii>=49 && ascii<=57)
+	     Print (” S[i][j]”)
+	     else if(i==p&&j==q && fix[i][j]==0)
+	     Print (“_”)
+	     else if(S[i][j]==NULL)
+	     Print (“  ”)
+	     otherwise
+	     Print (“ S[i][j]”)
+	     if(j==2||j==5)
+	     Print (" ||")
+	     otherwise
+	     Print (" |")
+	done
+	Print (“\n”)
+done
+Print  " ( p+1,q+1) "
+
+STEP 7: [Check whether Matrix is complete]
+for i=0 to 8 in steps of 1
+do
+	for j=0 to 8 in steps of 1 
+	do
+		if(S[i][j]==NULL)
+				go to STEP 9
+	done
+done
+
+STEP 8: [Check whether Sudoku is Correct] 
+For i=0 to 8 in steps of 1
+	do
+		empt_flag()
+		for j=0 to 8 in steps if 1
+		do
+		      k=S[i][j]
+		      flag[k-1]=1
+		done
+		row[i]=check1(flag,9)
+		if(row[i]==0)
+		go to STEP 9
+	done
+	For i=0 to 8 in steps of 1
+	do
+		empt_flag()
+		for j=0 to 8 in steps if 1
+		do
+		      k=S[j][i]
+		      flag[k-1]=1
+		done
+		column[i]=check1(flag,9)
+		if(column[i]==0)
+		go to STEP 9
+   	done
+	check_box(0,2,0,2)
+    box[0] <-- check1(flag,9)
+	check_box(0,2,3,5)
+    box[1] <-- check1(flag,9)
+	check_box(0,2,6,8)
+    box[2] <-- check1(flag,9)
+	check_box(3,5,0,2)
+    box[3] <-- check1(flag,9)
+	check_box(3,5,3,5)
+    box[4] <-- check1(flag,9)
+	check_box(3,5,6,8)
+    box[5] <-- check1(flag,9)
+	check_box(6,8,0,2)
+    box[6] <-- check1(flag,9)
+	check_box(6,8,3,5)
+    box[7] <-- check1(flag,9)
+    check_box(6,8,6,8)
+    box[8] <-- check1(flag,9)
+
+    for(i=0;i<9;i++)
+   do
+	if(box[i]==0)
+		go to STEP 9
+done
+Print “You Won”
+goto step 15
+
+STEP 9: Read ch
+
+STEP 10: [Check ch]
+switch(ch)
+ do
+case ‘a’ or case ‘A’ :  [Moves position of curser left]
+      if(q==0)
+     		goto step 9
+      else
+	      do
+			 count <-- 0
+			 for i=q-1 till fix[p][i]==1 in steps of 1(decrement)
+			    count++
+			 if(i==-1)
+			 goto step 9
+			 else
+			 q <-- q-count-1
+    done
+break
+case 'd' or case ’D’:  [Moves position of curser right] 
+     if(q==8)  
+		     goto step 9
+		     else
+		     do
+			 count <-- 0
+			 for i=q+1 till fix[p][i]==1 in steps of 1(increment)
+			    count++
+			 if(i==9)
+			 goto step 9
+			 else
+			 q=q+count+1
+		     done
+		     break
+case 'w' or case 'W': [Moves position of curser upward]
+     if(p==0)
+		     goto ask;
+		     else
+		     do
+			 Count <-- 0;
+			 for i=p-1 till fix[i][q]==1 in steps of 1(decrement)
+			    count++
+			 if(i==-1)
+			 goto step 9
+			 else
+			 p=p-count-1
+		     done
+		     break
+case 's' or case 'S': [Moves position of curser downward]  
+     if(p==8)
+		     goto step 9
+		     else
+		     do
+			 count <-- 0
+			 for i=p+1 till fix[i][q]==1 in steps of 1(increment)
+			    count++
+			 if(i==9)
+			 goto step 9
+			 else
+			 p=p+count+1
+		     done
+		     break
+case '0': [Vanishes the previosly assigned value at curser position]
+     if(S[p][q]!=NULL) 
+		     S[p][q] <-- NULL
+		     else
+		     goto step 9
+		     break
+	case 1 to 9: S[i][j] <-- 1 to 9 respectively (what user entered)
+case '.': goto step 12
+otherwise goto step 9
+done
+
+STEP 11: goto step 7
+
+STEP 12: [Displays "OPTIONS"]
+Print("            >> OPTIONS <<
+			 1. Press c or C to close
+			 Once closed, your previously filled numbers will disappear.
+			 2. Press b or B to go back
+			 3. Press r or R to restart the game “)
+STEP 13: [Input Option]
+	Read decide
+
+STEP 14: [Check option]
+if(strcmp(decide,"c")==0||strcmp(decide,"C")==0)
+			goto step 15
+ else if(strcmp(decide,"b")==0||strcmp(decide,"B")==0)
+			goto step 7
+else if(strcmp(decide,"R")==0||strcmp(decide,"r")==0)
+			goto step 3
+else if(strcmp(decide,"n")==0||strcmp(decide,"N")==0)
+			goto start;
+else if(strcmp(decide,"i")==0||strcmp(decide,"I")==0)
+		     do
+			display Instructions
+			goto step 7;
+		     done
+else
+		     do
+			Print"\n Invalid Answer..."
+			Print"\n Give your answer: "
+			goto step 13
+		     done
+STEP 14: Stop
+
